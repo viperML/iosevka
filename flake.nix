@@ -56,9 +56,10 @@
                 pkgs.zip
               ];
             } ''
-              mkdir -p $out
+              WORKDIR="$PWD"
               cd $src/share/fonts/truetype
-              zip $out/iosevka.zip *
+              zip "$WORKDIR/iosevka.zip" *
+              cp -av "$WORKDIR/iosevka.zip" $out
             '';
         };
       };

@@ -6,5 +6,5 @@ To build it with nix:
 
 [source,console]
 ----
-$ nix build github:viperML/iosevka
+$ nix build github:viperML/iosevka#zipfile
 ----
