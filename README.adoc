@@ -1,0 +1,10 @@
+= viperML/iosevka
+
+This is my custom iosevka config.
+
+To build it with nix:
+
+[source,console]
+----
+$ nix build github:viperML/iosevka
+----
