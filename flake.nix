@@ -34,6 +34,8 @@
         };
         packages = {
           default = pkgs.napalm.buildPackage generated.iosevka.src {
+            pname = "iosevka";
+            version = generated.iosevka.version;
             npmCommands = [
               "npm install"
               "npm run build --no-update-notifier -- ttf::iosevka-normal >/dev/null"
