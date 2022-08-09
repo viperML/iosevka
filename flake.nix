@@ -21,6 +21,7 @@
       perSystem = {
         pkgs,
         system,
+        self',
         ...
       }: let
         generated = pkgs.callPackage ./generated.nix {};
@@ -48,6 +49,17 @@
               cp -av dist/*/ttf/* $out/share/fonts/truetype
             '';
           };
+          zipfile =
+            pkgs.runCommand "iosevka-zip" {
+              src = self'.packages.default;
+              nativeBuildInputs = [
+                pkgs.zip
+              ];
+            } ''
+              mkdir -p $out
+              cd $src/share/fonts/truetype
+              zip $out/iosevka.zip *
+            '';
         };
       };
     };
