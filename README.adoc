@@ -2,7 +2,9 @@
 
 This is my custom iosevka config.
 
-To build it with nix:
+Grab the latest zipfile from https://github.com/viperML/iosevka/releases[releases]
+
+Or build it with nix
 
 [source,console]
 ----
