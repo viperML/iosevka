@@ -13,6 +13,14 @@ jobs:
           install_url: https://nixos.org/nix/install
           extra_nix_config: experimental-features = nix-command flakes
       - name: Checkout
-        uses: actions/checkout@master
-      - name: Build flake
-        run: nix build .#zipfile -L
+        uses: actions/checkout@v3
+      - name: Build zipfile
+        run: |
+          nix build .#zipfile -L
+          cp -vL ./result ./iosevka.zip
+      - uses: ncipollo/release-action@v1
+        name: Release
+        with:
+          omitBody: true
+          omitName: true
+          artifacts: "iosevka.zip"
