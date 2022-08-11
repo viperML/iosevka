@@ -6,12 +6,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: nixos/nix
     steps:
-      - name: Set nix.conf
-        run: echo 'extra-experimental-features = nix-command flakes' >> /etc/nix/nix.conf
+      - name: Install nix
+        uses: cachix/install-nix-action@master
+        with:
+          install_url: https://nixos.org/nix/install
+          extra_nix_config: experimental-features = nix-command flakes
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@master
       - name: Build flake
         run: nix build .#zipfile -L
