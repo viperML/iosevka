@@ -8,15 +8,25 @@ no-cv-ss = true
   inherits = "ss14"
 
   [buildPlans.iosevka-normal.ligations]
-  inherits = "dlig"
+  inherits = "clike"
 
   [buildPlans.iosevka-normal.variants.design]
+    i = "hooky"
     zero = "slashed"
+    pilcrow = "high"
+    caret = "low"
+    paren = "normal"
+    brace = "straight"
+    number-sign = "upright"
+    ampersand = "closed"
+    dollar = "open-cap"
+    bar = "force-upright"
+    question = "smooth"
 
-# [buildPlans.iosevka-normal.weights.regular]
-# shape = 400
-# menu = 400
-# css = 400
+[buildPlans.iosevka-normal.weights.regular]
+shape = 400
+menu = 400
+css = 400
 
 [buildPlans.iosevka-normal.weights.medium]
 shape = 500
