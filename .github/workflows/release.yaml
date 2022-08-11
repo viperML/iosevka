@@ -1,0 +1,17 @@
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: nixos/nix
+    steps:
+      - name: Set nix.conf
+        run: echo 'extra-experimental-features = nix-command flakes' >> /etc/nix/nix.conf
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build flake
+        run: nix build .#zipfile -L
