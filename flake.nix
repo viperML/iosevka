@@ -35,6 +35,7 @@
             projectRoot = ./.;
             overridesDirs = [
               "${dream2nix}/overrides"
+              ./overrides
             ];
           };
         };
