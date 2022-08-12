@@ -24,7 +24,7 @@
         self',
         ...
       }: let
-        generated = pkgs.callPackage ./generated.nix {};
+        nv = (pkgs.callPackage ./generated.nix {}).iosevka;
       in {
         _module.args.pkgs = import nixpkgs {
           inherit system;
@@ -33,9 +33,8 @@
           ];
         };
         packages = {
-          default = pkgs.napalm.buildPackage generated.iosevka.src {
-            pname = "iosevka";
-            version = generated.iosevka.version;
+          default = pkgs.napalm.buildPackage nv.src {
+            inherit (nv) pname version;
             npmCommands = [
               "npm install"
               "npm run build --no-update-notifier -- ttf::iosevka-normal >/dev/null"
@@ -51,6 +50,26 @@
               cp -av dist/*/ttf/* $out/share/fonts/truetype
             '';
           };
+
+          web = pkgs.napalm.buildPackage nv.src {
+            inherit (nv) pname version;
+            npmCommands = [
+              "npm install"
+              "npm run build --no-update-notifier -- webfont::iosevka-normal >/dev/null"
+            ];
+            nativeBuildInputs = [
+              pkgs.ttfautohint
+            ];
+            postPatch = ''
+              cp ${./private-build-plans.toml} private-build-plans.toml
+            '';
+            installPhase = ''
+              mkdir -p $out
+              find dist -type f -name '*.woff2' -exec cp -v '{}' $out \;
+              find dist -type f -name '*.css' -exec cp -v '{}' $out \;
+            '';
+          };
+
           zipfile =
             pkgs.runCommand "iosevka-zip" {
               src = self'.packages.default;
