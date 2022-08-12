@@ -1,69 +1,48 @@
 {
+  description = "flake-parts based template";
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    napalm = {
-      url = "github:nix-community/napalm";
+    dream2nix = {
+      url = "github:nix-community/dream2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
   outputs = {
     self,
     nixpkgs,
     flake-parts,
-    napalm,
+    dream2nix,
   }:
     flake-parts.lib.mkFlake {inherit self;} {
-      systems = nixpkgs.lib.systems.flakeExposed;
+      systems = [
+        "x86_64-linux"
+      ];
       perSystem = {
         pkgs,
         system,
-        self',
         ...
       }: let
-        generated = pkgs.callPackage ./generated.nix {};
-      in {
-        _module.args.pkgs = import nixpkgs {
-          inherit system;
-          overlays = [
-            napalm.overlay
-          ];
-        };
-        packages = {
-          default = pkgs.napalm.buildPackage generated.iosevka.src {
-            pname = "iosevka";
-            version = generated.iosevka.version;
-            npmCommands = [
-              "npm install"
-              "npm run build --no-update-notifier -- ttf::iosevka-normal >/dev/null"
+        nv = (pkgs.callPackage ./generated.nix {}).iosevka;
+        dreamLib = dream2nix.lib.init {
+          inherit pkgs;
+          config = {
+            projectRoot = ./.;
+            overridesDirs = [
+              "${dream2nix}/overrides"
             ];
-            nativeBuildInputs = [
-              pkgs.ttfautohint
-            ];
-            postPatch = ''
-              cp ${./private-build-plans.toml} private-build-plans.toml
-            '';
-            installPhase = ''
-              mkdir -p $out/share/fonts/truetype
-              cp -av dist/*/ttf/* $out/share/fonts/truetype
-            '';
           };
-          zipfile =
-            pkgs.runCommand "iosevka-zip" {
-              src = self'.packages.default;
-              nativeBuildInputs = [
-                pkgs.zip
-              ];
-            } ''
-              WORKDIR="$PWD"
-              cd $src/share/fonts/truetype
-              zip "$WORKDIR/iosevka.zip" *
-              cp -av "$WORKDIR/iosevka.zip" $out
-            '';
         };
+        dream = dreamLib.makeOutputs {
+          source = nv.src;
+        };
+      in {
+        inherit (dream) packages devShells;
       };
     };
 }
