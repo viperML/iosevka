@@ -52,7 +52,8 @@
           };
 
           web = pkgs.napalm.buildPackage nv.src {
-            inherit (nv) pname version;
+            pname = "${nv.pname}-web";
+            inherit (nv)version;
             npmCommands = [
               "npm install"
               "npm run build --no-update-notifier -- webfont::iosevka-normal >/dev/null"
@@ -79,6 +80,19 @@
             } ''
               WORKDIR="$PWD"
               cd $src/share/fonts/truetype
+              zip "$WORKDIR/iosevka.zip" *
+              cp -av "$WORKDIR/iosevka.zip" $out
+            '';
+
+          web-zipfile =
+            pkgs.runCommand "iosevka-web-zip" {
+              src = self'.packages.web;
+              nativeBuildInputs = [
+                pkgs.zip
+              ];
+            } ''
+              WORKDIR="$PWD"
+              cd $src
               zip "$WORKDIR/iosevka.zip" *
               cp -av "$WORKDIR/iosevka.zip" $out
             '';
