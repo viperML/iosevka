@@ -26,6 +26,7 @@
       perSystem = {
         pkgs,
         system,
+        self',
         ...
       }: let
         nv = (pkgs.callPackage ./generated.nix {}).iosevka;
@@ -43,7 +44,21 @@
           source = nv.src;
         };
       in {
-        inherit (dream) packages devShells;
+        packages = {
+          default = dream.packages.iosevka;
+          zipfile =
+            pkgs.runCommand "iosevka-zip" {
+              src = self'.packages.default;
+              nativeBuildInputs = [
+                pkgs.zip
+              ];
+            } ''
+              WORKDIR="$PWD"
+              cd $src/share/fonts/truetype
+              zip "$WORKDIR/iosevka.zip" *
+              cp -av "$WORKDIR/iosevka.zip" $out
+            '';
+        };
       };
     };
 }
