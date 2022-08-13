@@ -4,7 +4,7 @@
       pkgs.ttfautohint
     ];
     postConfigure = ''
-      cp -v ${../../plans.toml} private-build-plans.toml
+      cp -vL ${../../private-build-plans.toml} private-build-plans.toml
     '';
     buildPhase = ''
       runHook preBuild

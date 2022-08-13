@@ -11,6 +11,10 @@
       url = "github:nix-community/dream2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    iosevka = {
+      url = "github:be5invis/Iosevka/v15.6.3";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -18,47 +22,26 @@
     nixpkgs,
     flake-parts,
     dream2nix,
+    iosevka,
   }:
     flake-parts.lib.mkFlake {inherit self;} {
+      imports = [
+        (import ./module.nix dream2nix)
+      ];
+
       systems = [
         "x86_64-linux"
       ];
-      perSystem = {
-        pkgs,
-        system,
-        self',
-        ...
-      }: let
-        nv = (pkgs.callPackage ./generated.nix {}).iosevka;
-        dreamLib = dream2nix.lib.init {
-          inherit pkgs;
-          config = {
-            projectRoot = ./.;
-            overridesDirs = [
-              "${dream2nix}/overrides"
-              ./overrides
-            ];
-          };
+
+      dream = {
+        config = {
+          projectRoot = ./.;
+          overridesDirs = [
+            "${dream2nix}/overrides"
+            ./overrides
+          ];
         };
-        dream = dreamLib.makeOutputs {
-          source = nv.src;
-        };
-      in {
-        packages = {
-          default = dream.packages.iosevka;
-          zipfile =
-            pkgs.runCommand "iosevka-zip" {
-              src = self'.packages.default;
-              nativeBuildInputs = [
-                pkgs.zip
-              ];
-            } ''
-              WORKDIR="$PWD"
-              cd $src/share/fonts/truetype
-              zip "$WORKDIR/iosevka.zip" *
-              cp -av "$WORKDIR/iosevka.zip" $out
-            '';
-        };
+        source = iosevka;
       };
     };
 }
