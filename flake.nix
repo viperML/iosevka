@@ -43,5 +43,24 @@
         };
         source = iosevka;
       };
+
+      perSystem = {
+        pkgs,
+        self',
+        ...
+      }: {
+        packages.zipfile =
+          pkgs.runCommand "iosevka-zip" {
+            src = self'.packages.iosevka;
+            nativeBuildInputs = [
+              pkgs.zip
+            ];
+          } ''
+            WORKDIR="$PWD"
+            cd $src/share/fonts/truetype
+            zip "$WORKDIR/iosevka.zip" *
+            cp -av "$WORKDIR/iosevka.zip" $out
+          '';
+      };
     };
 }
