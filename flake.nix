@@ -47,13 +47,14 @@
             '';
             installPhase = ''
               mkdir -p $out/share/fonts/truetype
-              cp -av dist/*/ttf/* $out/share/fonts/truetype
+              cp -avL dist/*/ttf/* $out/share/fonts/truetype
+              cp -avL "${self'.packages.nerd-fonts-src}/src/glyphs/Symbols-1000-em Nerd Font Complete.ttf" $out/share/fonts/truetype
             '';
           };
 
           web = pkgs.napalm.buildPackage nv.src {
             pname = "${nv.pname}-web";
-            inherit (nv)version;
+            inherit (nv) version;
             npmCommands = [
               "npm install"
               "npm run build --no-update-notifier -- webfont::iosevka-normal >/dev/null"
@@ -96,6 +97,16 @@
               zip "$WORKDIR/iosevka.zip" *
               cp -av "$WORKDIR/iosevka.zip" $out
             '';
+
+          nerd-fonts-src = pkgs.fetchFromGitHub {
+            owner = "ryanoasis";
+            repo = "nerd-fonts";
+            rev = "v2.1.0";
+            sparseCheckout = ''
+              src/glyphs
+            '';
+            hash = "sha256-Vhyd1jCsDNIVNE/WF2bxAcmRguEwj6i3OqBC1fxi1S4=";
+          };
         };
       };
     };
