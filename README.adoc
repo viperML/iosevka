@@ -8,5 +8,5 @@ Or build it with nix
 
 [source,console]
 ----
-$ nix build github:viperML/iosevka#zipfile
+$ nix build github:viperML/iosevka
 ----
