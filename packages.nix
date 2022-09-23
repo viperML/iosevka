@@ -75,7 +75,7 @@
           pkgs.nerd-font-patcher
         ];
         buildPhase = ''
-          set +x
+          set -x
           trap 'set +x' ERR
 
           mkdir -p $out
@@ -87,7 +87,7 @@
               --complete \
               --no-progressbars \
               --outputdir $out \
-              $file
+              $file &> /dev/null
           done
 
           set +x
