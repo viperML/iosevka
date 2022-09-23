@@ -15,9 +15,13 @@
     packages = let
       plan = "iosevka-normal";
       nv = (pkgs.callPackage ./generated.nix {}).iosevka;
-      mkZip = name: src:
-        pkgs.runCommand name {
+      mkZip = src: let
+        pname = "${src.pname}-zip";
+      in
+        pkgs.runCommand "${pname}-${src.version}" {
+          inherit pname;
           inherit src;
+          inherit (src) version;
           nativeBuildInputs = [
             pkgs.zip
           ];
@@ -26,6 +30,18 @@
           cd $src
           zip "$WORKDIR/iosevka.zip" *
           cp -av "$WORKDIR/iosevka.zip" $out
+        '';
+
+      mkLinux = src: let
+        pname = "${src.pname}-linux";
+      in
+        pkgs.runCommand "${pname}-${src.version}" {
+          inherit pname;
+          inherit src;
+          inherit (src) version;
+        } ''
+          mkdir -p $out/share/fonts/truetype
+          cp -v $src/* $out/share/fonts/truetype
         '';
     in {
       inherit (nv) src;
@@ -79,8 +95,11 @@
         dontInstall = true;
       };
 
-      ttf-zip = mkZip "${plan}-ttf-zip" config.packages.ttf;
-      ttf-nerd-zip = mkZip "${plan}-ttf-nerd-zip" config.packages.ttf-nerd;
+      ttf-zip = mkZip config.packages.ttf;
+      ttf-nerd-zip = mkZip config.packages.ttf-nerd;
+
+      ttf-linux = mkLinux config.packages.ttf;
+      ttf-nerd-linux = mkLinux config.packages.ttf-nerd;
 
       ####
       # web versions
@@ -106,7 +125,7 @@
         '';
       };
 
-      web-zip = mkZip "${plan}-web-zip" config.packages.web;
+      web-zip = mkZip config.packages.web;
     };
   };
 }
