@@ -11,7 +11,9 @@ no-cv-ss = true
   inherits = "clike"
 
   [buildPlans.iosevka-normal.variants.design]
-    i = "hooky"
+    x = "curly-serifless"
+    i = "flat-tailed"
+    l = "serifed-flat-tailed"
     zero = "slashed"
     pilcrow = "high"
     caret = "low"
