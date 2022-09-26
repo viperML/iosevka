@@ -1,4 +1,4 @@
-{inputs, ...}: {
+{inputs, lib, ...}: {
   perSystem = {
     pkgs,
     system,
@@ -15,13 +15,12 @@
     packages = let
       plan = "iosevka-normal";
       nv = (pkgs.callPackage ./generated.nix {}).iosevka;
+      version = lib.removePrefix "v" nv.version;
       mkZip = src: let
         pname = "${src.pname}-zip";
       in
-        pkgs.runCommand "${pname}-${src.version}" {
-          inherit pname;
-          inherit src;
-          inherit (src) version;
+        pkgs.runCommand "${pname}-${version}" {
+          inherit pname src version;
           nativeBuildInputs = [
             pkgs.zip
           ];
@@ -36,9 +35,7 @@
         pname = "${src.pname}-linux";
       in
         pkgs.runCommand "${pname}-${src.version}" {
-          inherit pname;
-          inherit src;
-          inherit (src) version;
+          inherit pname src version;
         } ''
           mkdir -p $out/share/fonts/truetype
           cp -v $src/* $out/share/fonts/truetype
@@ -50,7 +47,7 @@
 
       ttf = pkgs.napalm.buildPackage nv.src {
         pname = "${plan}-ttf";
-        inherit (nv) version;
+        inherit version;
         npmCommands = [
           "npm install"
           "npm run build --no-update-notifier -- ttf::iosevka-normal >/dev/null"
@@ -69,7 +66,7 @@
 
       ttf-nerd = pkgs.stdenvNoCC.mkDerivation {
         pname = "${plan}-ttf-nerd";
-        inherit (nv) version;
+        inherit version;
         src = config.packages.ttf;
         nativeBuildInputs = [
           pkgs.nerd-font-patcher
@@ -107,7 +104,7 @@
 
       web = pkgs.napalm.buildPackage nv.src {
         pname = "${plan}-web";
-        inherit (nv) version;
+        inherit version;
         npmCommands = [
           "npm install"
           "npm run build --no-update-notifier -- webfont::iosevka-normal >/dev/null"
