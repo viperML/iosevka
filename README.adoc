@@ -10,3 +10,5 @@ Or build it with nix
 ----
 $ nix build github:viperML/iosevka
 ----
+
+image:screenshot.png[]
