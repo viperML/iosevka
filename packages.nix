@@ -8,7 +8,7 @@
     _module.args.pkgs = import inputs.nixpkgs {
       inherit system;
       overlays = [
-        inputs.napalm.overlay
+        inputs.napalm.overlays.default
       ];
     };
 
