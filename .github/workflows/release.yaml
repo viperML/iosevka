@@ -29,4 +29,5 @@ jobs:
         with:
           omitBody: true
           omitName: true
+          allowUpdates: true
           artifacts: iosevka-${{ matrix.output }}.zip
