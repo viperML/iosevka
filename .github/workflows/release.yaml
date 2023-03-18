@@ -6,21 +6,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        output: ["ttf-nerd-zip", "ttf-zip", "web-zip"]
     steps:
       - name: Install nix
         uses: cachix/install-nix-action@master
         with:
           install_url: https://nixos.org/nix/install
           extra_nix_config: experimental-features = nix-command flakes
+
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build zipfile
+
+      - name: Build
         run: |
-          nix build -L
-          cp -vL ./result ./iosevka.zip
+          nix build .#${{ matrix.output }} -L
+          cp -vL ./result ./iosevka-${{ matrix.output }}.zip
+
       - uses: ncipollo/release-action@v1
         name: Release
         with:
           omitBody: true
           omitName: true
-          artifacts: "iosevka.zip"
+          artifacts: iosevka-${{ matrix.output }}.zip
