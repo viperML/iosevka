@@ -11,5 +11,7 @@
       fetchSubmodules = false;
       sha256 = "sha256-Ksd1REqCe+42hpIwikIeKNYIYaHc5hqxuny8lYRuQcY=";
     };
+    "package-lock.json" = builtins.readFile ./iosevka-v30.3.2/package-lock.json;
+    "package.json" = builtins.readFile ./iosevka-v30.3.2/package.json;
   };
 }

@@ -1,41 +1,45 @@
-{ nv
-, buildNpmPackage
-, remarshal
-, ttfautohint-nox
-, importNpmLock
-,
-}:
-buildNpmPackage {
+{
+  pname,
+  # --
+  buildNpmPackage,
+  importNpmLock,
+  remarshal,
+  ttfautohint-nox,
+  callPackages,
+}: let
+  nv = (callPackages ./_sources/generated.nix {}).iosevka;
+in
+  buildNpmPackage {
+    inherit pname;
+    inherit (nv) version src;
 
-  pname = "iosevka-normal";
-  inherit (nv) version src;
+    npmDeps = importNpmLock {
+      npmRoot = nv.src; # ifd
+    };
 
-  npmDeps = importNpmLock {
-    npmRoot = nv.src;
-  };
+    npmConfigHook = importNpmLock.npmConfigHook;
 
-  npmConfigHook = importNpmLock.npmConfigHook;
+    nativeBuildInputs = [
+      remarshal
+      ttfautohint-nox
+    ];
 
-  postPatch = ''
-    cp -v ${./private-build-plans.toml} private-build-plans.toml
-  '';
+    postPatch = ''
+      cp -v ${./private-build-plans.toml} private-build-plans.toml
+    '';
 
-  buildPhase = ''
-    export HOME=$TMPDIR
-    runHook preBuild
-    npm run build --no-update-notifier --targets contents::iosevka-normal -- --jCmd=$NIX_BUILD_CORES --verbose=9
-    runHook postBuild
-  '';
+    enableParallelBuilding = true;
+    buildPhase = ''
+      export HOME=$TMPDIR
+      runHook preBuild
+      npm run build --no-update-notifier --targets contents::${pname} -- --jCmd=$NIX_BUILD_CORES --verbose=9
+      runHook postBuild
+    '';
 
-  nativeBuildInputs = [
-    remarshal
-    ttfautohint-nox
-  ];
-
-  installPhase = ''
-    mkdir -p $out
-    cp -avL dist/* $out
-  '';
-
-  enableParallelBuilding = true;
-}
+    installPhase = ''
+      runHook preInstall
+      mkdir -p $out
+      cp -avL dist/${pname}/* $out
+      runHook postInstall
+    '';
+  }

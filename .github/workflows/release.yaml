@@ -6,23 +6,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        output: ["ttf-nerd-zip", "ttf-zip", "web-zip"]
     steps:
-      - name: Install nix
-        uses: cachix/install-nix-action@master
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
         with:
-          install_url: https://nixos.org/nix/install
-          extra_nix_config: experimental-features = nix-command flakes
+          extra-conf: |
+            extra-experimental-features = nix-command flakes
+            allow-import-from-derivation = true
+
+      - name: Install Magic Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
 
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Build
-        run: |
-          nix build .#${{ matrix.output }} -L
-          cp -vL ./result ./iosevka-${{ matrix.output }}.zip
+        run: ./ci.sh ./dist
 
       - uses: ncipollo/release-action@v1
         name: Release
@@ -30,4 +29,4 @@ jobs:
           omitBody: true
           omitName: true
           allowUpdates: true
-          artifacts: iosevka-${{ matrix.output }}.zip
+          artifacts: ./dist/*

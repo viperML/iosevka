@@ -2,7 +2,10 @@
     "iosevka": {
         "cargoLocks": null,
         "date": null,
-        "extract": null,
+        "extract": {
+            "package-lock.json": "./iosevka-v30.3.2/package-lock.json",
+            "package.json": "./iosevka-v30.3.2/package.json"
+        },
         "name": "iosevka",
         "passthru": null,
         "pinned": false,
