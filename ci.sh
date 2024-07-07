@@ -7,9 +7,9 @@ DIST="$(realpath "${1:-$PWD/dist}")"
 mkdir -p "$DIST"
 
 pushd ./result/TTF
-zip "$DIST/iosevka-ttf.zip" ./*.ttf
+zip -9 -r "$DIST/iosevka-ttf.zip" ./.
 popd
 
 pushd ./result
-zip "$DIST/iosevka.zip" ./*
+zip -9 -r "$DIST/iosevka.zip" ./.
 popd
