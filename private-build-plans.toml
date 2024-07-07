@@ -2,7 +2,7 @@
 family = "iosevka-normal"
 spacing = "normal"
 serifs = "sans"
-no-cv-ss = true
+noCvSs = true
 
   [buildPlans.iosevka-normal.variants]
   inherits = "ss14"
