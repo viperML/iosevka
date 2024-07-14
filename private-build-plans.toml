@@ -3,6 +3,7 @@ family = "iosevka-normal"
 spacing = "normal"
 serifs = "sans"
 noCvSs = true
+webfontFormats = ["woff2"]
 
   [buildPlans.iosevka-normal.variants]
   inherits = "ss14"
