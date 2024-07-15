@@ -3,13 +3,10 @@ family = "iosevka-normal"
 spacing = "normal"
 serifs = "sans"
 noCvSs = true
-webfontFormats = ["woff2"]
+webfontFormats = ["WOFF2"]
 
   [buildPlans.iosevka-normal.variants]
   inherits = "ss14"
-
-  [buildPlans.iosevka-normal.ligations]
-  inherits = "clike"
 
   [buildPlans.iosevka-normal.variants.design]
     x = "curly-serifless"
@@ -25,6 +22,16 @@ webfontFormats = ["woff2"]
     dollar = "open-cap"
     bar = "force-upright"
     question = "smooth"
+    one = "no-base"
+    seven = "bend-serifless"
+    w = "straight-flat-top-serifless"
+
+  [buildPlans.iosevka-normal.ligations]
+  inherits = "clike"
+  enables = [
+    "center-op-trigger-equal-l",
+    "html-comment"
+  ]
 
 [buildPlans.iosevka-normal.weights.regular]
 shape = 400

@@ -1,7 +1,9 @@
 #! /usr/bin/env bash
 set -eux
 
-nix build .#iosevka-normal.base -L
+export NIX_CONFIG="allow-import-from-derivation = true"
+
+nix build .#iosevka-normal.base -L "$@"
 
 DIST="$(realpath "${1:-$PWD/dist}")"
 mkdir -p "$DIST"
