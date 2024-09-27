@@ -28,12 +28,13 @@ webfontFormats = ["WOFF2"]
 
   [buildPlans.iosevka-normal.ligations]
   # https://github.com/be5invis/Iosevka/blob/main/params/ligation-set.toml
-  inherits = "clike"
+  # inherits = "clike"
   enables = [
-    "center-op-trigger-equal-l",
-    "html-comment",
-    "counter-arrow-l",
-    "counter-arrow-r",
+    "--default-center-ops--",
+    "--default-kern--",
+    # "html-comment",
+    # "counter-arrow-l",
+    # "counter-arrow-r",
   ]
 
 [buildPlans.iosevka-normal.weights.regular]
