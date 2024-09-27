@@ -28,7 +28,7 @@ webfontFormats = ["WOFF2"]
 
   [buildPlans.iosevka-normal.ligations]
   # https://github.com/be5invis/Iosevka/blob/main/params/ligation-set.toml
-  inherits = "calt"
+  inherits = "default-calt"
   disables = [
   	# '--default-center-ops--',
 	'--default-equality-inequality--',
