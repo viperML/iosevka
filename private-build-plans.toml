@@ -4,6 +4,7 @@ spacing = "normal"
 serifs = "sans"
 noCvSs = true
 webfontFormats = ["WOFF2"]
+noLigation = true
 
   [buildPlans.iosevka-normal.variants]
   inherits = "ss14"
@@ -26,23 +27,23 @@ webfontFormats = ["WOFF2"]
     seven = "bend-serifless"
     w = "straight-flat-top-serifless"
 
-  [buildPlans.iosevka-normal.ligations]
-  # https://github.com/be5invis/Iosevka/blob/main/params/ligation-set.toml
-  inherits = "default-calt"
-  disables = [
-  	# '--default-center-ops--',
-	'--default-equality-inequality--',
-	# '--default-kern--',
-	'--default-chaining--',
-	'arrow-l', 'arrow-r', 'arrow-lr',
-	'html-comment',
-	'ltgt-diamond-tag',
-	'ltgt-slash-tag',
-	'trig',
-	'slash-asterisk',
-	'llgg',
-	'llggeq',
-  ]
+ #  [buildPlans.iosevka-normal.ligations]
+ #  # https://github.com/be5invis/Iosevka/blob/main/params/ligation-set.toml
+ #  inherits = "default-calt"
+ #  disables = [
+ #  	# '--default-center-ops--',
+	# '--default-equality-inequality--',
+	# # '--default-kern--',
+	# '--default-chaining--',
+	# 'arrow-l', 'arrow-r', 'arrow-lr',
+	# 'html-comment',
+	# 'ltgt-diamond-tag',
+	# 'ltgt-slash-tag',
+	# 'trig',
+	# 'slash-asterisk',
+	# 'llgg',
+	# 'llggeq',
+ #  ]
 
 [buildPlans.iosevka-normal.weights.regular]
 shape = 400
