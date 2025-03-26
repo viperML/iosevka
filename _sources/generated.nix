@@ -3,15 +3,10 @@
 {
   iosevka = {
     pname = "iosevka";
-    version = "v30.3.2";
-    src = fetchFromGitHub {
-      owner = "be5invis";
-      repo = "Iosevka";
-      rev = "v30.3.2";
-      fetchSubmodules = false;
-      sha256 = "sha256-Ksd1REqCe+42hpIwikIeKNYIYaHc5hqxuny8lYRuQcY=";
+    version = "v33.1.0";
+    src = fetchTarball {
+      url = "https://github.com/be5invis/Iosevka/archive/v33.1.0.tar.gz";
+      sha256 = "sha256-34TTyv9EShZSqJy0HCs0RZrDE38DIFMqkrxo/I03HEs=";
     };
-    "package-lock.json" = builtins.readFile ./iosevka-v30.3.2/package-lock.json;
-    "package.json" = builtins.readFile ./iosevka-v30.3.2/package.json;
   };
 }

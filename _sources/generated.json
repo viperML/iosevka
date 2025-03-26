@@ -2,24 +2,15 @@
     "iosevka": {
         "cargoLocks": null,
         "date": null,
-        "extract": {
-            "package-lock.json": "./iosevka-v30.3.2/package-lock.json",
-            "package.json": "./iosevka-v30.3.2/package.json"
-        },
+        "extract": null,
         "name": "iosevka",
         "passthru": null,
         "pinned": false,
         "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "be5invis",
-            "repo": "Iosevka",
-            "rev": "v30.3.2",
-            "sha256": "sha256-Ksd1REqCe+42hpIwikIeKNYIYaHc5hqxuny8lYRuQcY=",
-            "type": "github"
+            "sha256": "sha256-34TTyv9EShZSqJy0HCs0RZrDE38DIFMqkrxo/I03HEs=",
+            "type": "tarball",
+            "url": "https://github.com/be5invis/Iosevka/archive/v33.1.0.tar.gz"
         },
-        "version": "v30.3.2"
+        "version": "v33.1.0"
     }
 }

@@ -1,0 +1,12 @@
+{
+  "name": "@_viper/iosevka",
+  "version": "0.1.0",
+  "main": "iosevka-normal.css",
+    "keywords": [],
+  "author": "_viper",
+    "license": "OFL-1.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viperML/iosevka"
+  }
+}

@@ -1,3 +1,5 @@
 [iosevka]
-fetch.github = "be5invis/Iosevka"
+# fetch.github = "be5invis/Iosevka"
+# fetch.git = "https://github.com/be5invis/Iosevka.git"
+fetch.tarball = "https://github.com/be5invis/Iosevka/archive/$ver.tar.gz"
 src.github = "be5invis/Iosevka"
