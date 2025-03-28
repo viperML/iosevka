@@ -7,32 +7,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
-        with:
-          extra-conf: |
-            extra-experimental-features = nix-command flakes
-            allow-import-from-derivation = true
+      - uses: cachix/install-nix-action@master
+        name: 🐧 Install Nix
 
-      - name: Install Magic Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
-
-      - name: Checkout
+      - name: 📂 Checkout
         uses: actions/checkout@v3
 
-      - name: Build
+      - name: 🛠️ Build
         run: |
           nix build .#iosevka-normal.base-zip -o /tmp/iosevka-normal.zip -L
 
       - uses: ncipollo/release-action@v1
-        name: Release
+        name: 🚀 Release
         with:
           omitBody: true
           omitName: true
           allowUpdates: true
           artifacts: /tmp/iosevka-normal.zip
 
-      - name: Publish to npm
+      - name: 📦 Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
