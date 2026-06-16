@@ -3,7 +3,7 @@
   # --
   buildNpmPackage,
   importNpmLock,
-  remarshal,
+  go-toml,
   ttfautohint-nox,
   callPackages,
 }: let
@@ -21,7 +21,7 @@ in
     npmConfigHook = importNpmLock.npmConfigHook;
 
     nativeBuildInputs = [
-      remarshal
+      go-toml
       ttfautohint-nox
     ];
 
@@ -35,7 +35,7 @@ in
       runHook preBuild
       trap "set +x" ERR
       set -x
-      npm run build --no-update-notifier --targets contents::${pname} -- --jCmd=$NIX_BUILD_CORES --verbose=9
+      npm run build --no-update-notifier --targets contents::${pname} -- --jCmd=$NIX_BUILD_CORES --verbose=9 | cat
       set +x
       runHook postBuild
     '';
@@ -46,4 +46,6 @@ in
       cp -avL dist/${pname}/* $out
       runHook postInstall
     '';
+
+    __structuredAttrs = true;
   }

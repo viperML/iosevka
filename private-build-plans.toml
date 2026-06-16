@@ -1,15 +1,16 @@
-[buildPlans.iosevka-normal]
-family = "iosevka-normal"
+[buildPlans.IosevkaViper]
+family = "Iosevka Viper"
 spacing = "normal"
 serifs = "sans"
-noCvSs = true
+noCvSs = false
 webfontFormats = ["WOFF2"]
+exportGlyphNames = false
 noLigation = true
 
-  [buildPlans.iosevka-normal.variants]
+  [buildPlans.IosevkaViper.variants]
   inherits = "ss14"
 
-  [buildPlans.iosevka-normal.variants.design]
+  [buildPlans.IosevkaViper.variants.design]
     x = "curly-serifless"
     i = "flat-tailed"
     l = "serifed-flat-tailed"
@@ -27,40 +28,7 @@ noLigation = true
     seven = "bend-serifless"
     w = "straight-flat-top-serifless"
 
- #  [buildPlans.iosevka-normal.ligations]
- #  # https://github.com/be5invis/Iosevka/blob/main/params/ligation-set.toml
- #  inherits = "default-calt"
- #  disables = [
- #  	# '--default-center-ops--',
-	# '--default-equality-inequality--',
-	# # '--default-kern--',
-	# '--default-chaining--',
-	# 'arrow-l', 'arrow-r', 'arrow-lr',
-	# 'html-comment',
-	# 'ltgt-diamond-tag',
-	# 'ltgt-slash-tag',
-	# 'trig',
-	# 'slash-asterisk',
-	# 'llgg',
-	# 'llggeq',
- #  ]
-
-[buildPlans.iosevka-normal.weights.regular]
-shape = 400
-menu = 400
-css = 400
-
-[buildPlans.iosevka-normal.weights.medium]
+[buildPlans.IosevkaViper.widths.Normal]
 shape = 500
-menu = 500
-css = 500
-
-[buildPlans.iosevka-normal.weights.semibold]
-shape = 600
-menu = 600
-css = 600
-
-[buildPlans.iosevka-normal.weights.bold]
-shape = 700
-menu = 700
-css = 700
+menu = 5
+css = "normal"
