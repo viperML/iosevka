@@ -24,27 +24,27 @@ jobs:
           allowUpdates: true
           artifacts: /tmp/iosevka-normal.zip
 
-      - name: 📦 Publish to npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          out="$(nix build .#iosevka-normal.web -L --print-out-paths --no-link)"
-          pushd "$(mktemp -d)"
-          cp -vr $out/* .
-
-          # Set version to tag name
-          chmod +rw package.json
-          version="${GITHUB_REF#refs/tags/}"
-          version="${version#v}"
-          jq ".version = \"$version\"" package.json > package.json.tmp
-          mv package.json.tmp package.json
-
-          tee .npmrc <<EOF
-          //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}
-          registry=https://registry.npmjs.org/
-          always-auth=true
-          EOF
-
-          npm publish --no-git-checks
-
-          popd
+      # - name: 📦 Publish to npm
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #   run: |
+      #     out="$(nix build .#iosevka-normal.web -L --print-out-paths --no-link)"
+      #     pushd "$(mktemp -d)"
+      #     cp -vr $out/* .
+      # 
+      #     # Set version to tag name
+      #     chmod +rw package.json
+      #     version="${GITHUB_REF#refs/tags/}"
+      #     version="${version#v}"
+      #     jq ".version = \"$version\"" package.json > package.json.tmp
+      #     mv package.json.tmp package.json
+      # 
+      #     tee .npmrc <<EOF
+      #     //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}
+      #     registry=https://registry.npmjs.org/
+      #     always-auth=true
+      #     EOF
+      # 
+      #     npm publish --no-git-checks
+      # 
+      #     popd
