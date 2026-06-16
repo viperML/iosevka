@@ -2,7 +2,7 @@
 family = "Iosevka Viper"
 spacing = "normal"
 serifs = "sans"
-noCvSs = false
+noCvSs = true
 webfontFormats = ["WOFF2"]
 exportGlyphNames = false
 noLigation = true
@@ -28,7 +28,57 @@ noLigation = true
     seven = "bend-serifless"
     w = "straight-flat-top-serifless"
 
-[buildPlans.IosevkaViper.widths.Normal]
+[buildPlans.IosevkaViper.weights.Thin]
+shape = 100
+menu = 100
+css = 100
+
+[buildPlans.IosevkaViper.weights.ExtraLight]
+shape = 200
+menu = 200
+css = 200
+
+[buildPlans.IosevkaViper.weights.Light]
+shape = 300
+menu = 300
+css = 300
+
+[buildPlans.IosevkaViper.weights.SemiLight]
+shape = 350
+menu = 350
+css = 350
+
+[buildPlans.IosevkaViper.weights.Regular]
+shape = 400
+menu = 400
+css = 400
+
+[buildPlans.IosevkaViper.weights.Medium]
 shape = 500
-menu = 5
+menu = 500
+css = 500
+
+[buildPlans.IosevkaViper.weights.SemiBold]
+shape = 600
+menu = 600
+css = 600
+
+[buildPlans.IosevkaViper.weights.Bold]
+shape = 700
+menu = 700
+css = 700
+
+[buildPlans.IosevkaViper.weights.ExtraBold]
+shape = 800
+menu = 800
+css = 800
+
+[buildPlans.IosevkaViper.weights.Black]
+shape = 900
+menu = 900
+css = 900
+
+[buildPlans.IosevkaViper.widths.Normal]
+shape = 480
+menu = 3
 css = "normal"
